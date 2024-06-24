@@ -100,5 +100,8 @@ Replace `your-entry-file.js` with the actual entry point of your application.
   ```bash
   npx prisma studio
   ```
-
+- To generate clients :
+   ```bash
+   npx prisma generate
+   ```
 ---
