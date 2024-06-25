@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 //Insert function::
-const insertData = (email, password, firstName, lastName) => __awaiter(void 0, void 0, void 0, function* () {
+const insertUserData = (email, password, firstName, lastName) => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield prisma.user.create({
         data: {
             email,
@@ -30,7 +30,7 @@ const insertData = (email, password, firstName, lastName) => __awaiter(void 0, v
     console.log(res);
 });
 //Update 
-const updateData = (email_1, _a) => __awaiter(void 0, [email_1, _a], void 0, function* (email, { firstName, lastName }) {
+const updateUserData = (email_1, _a) => __awaiter(void 0, [email_1, _a], void 0, function* (email, { firstName, lastName }) {
     const res = yield prisma.user.update({
         where: {
             email: email
@@ -42,8 +42,9 @@ const updateData = (email_1, _a) => __awaiter(void 0, [email_1, _a], void 0, fun
     });
     console.log(res);
 });
-// updateData("marathesameer15@gmail.com",{firstName:"Marathe",lastName:"Sameer"})
-const getData = () => __awaiter(void 0, void 0, void 0, function* () {
+// updateUserData("marathesameer15@gmail.com",{firstName:"Marathe",lastName:"Sameer"})
+//get user details
+const getUserData = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield prisma.user.findMany({
         select: {
             id: true,
@@ -53,4 +54,34 @@ const getData = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     console.log(res);
 });
-getData();
+// getUserData()
+//Todos::
+const createTodo = (userId, title, description) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield prisma.todo.create({
+        data: {
+            userId,
+            title,
+            description
+        },
+        select: {
+            userId: true,
+            title: true,
+            description: true
+        }
+    });
+    console.log(res);
+});
+// createTodo(2,"Gaming","valorant at 7pm")
+//getTodos
+const getTodos = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield prisma.todo.findMany({
+        select: {
+            id: true,
+            title: true,
+            description: true,
+            userId: true
+        }
+    });
+    console.log(res);
+});
+getTodos(1);

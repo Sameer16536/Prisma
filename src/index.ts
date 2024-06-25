@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 //Insert function::
-const insertData = async(email:string,password:string,firstName:string,lastName:string)=>{
+const insertUserData = async(email:string,password:string,firstName:string,lastName:string)=>{
   const res = await  prisma.user.create({
         data:{
             email,
@@ -19,14 +19,14 @@ const insertData = async(email:string,password:string,firstName:string,lastName:
     })
     console.log(res)
 }
-// insertData("johnnysins@gmail.com","Jsin","Johnny","Sins")
+// insertUserData("johnnysins@gmail.com","Jsin","Johnny","Sins")
 
 interface UpdateParams{
     firstName:string,
     lastName:string
 }
 //Update 
-const updateData = async(email:string,{firstName,lastName}:UpdateParams)=>{
+const updateUserData = async(email:string,{firstName,lastName}:UpdateParams)=>{
     const res = await prisma.user.update({
         where:{
             email:email
@@ -38,10 +38,10 @@ const updateData = async(email:string,{firstName,lastName}:UpdateParams)=>{
     })
     console.log(res)
 }
-// updateData("marathesameer15@gmail.com",{firstName:"Marathe",lastName:"Sameer"})
+// updateUserData("marathesameer15@gmail.com",{firstName:"Marathe",lastName:"Sameer"})
 
 //get user details
-const getData = async()=>{
+const getUserData = async()=>{
     const res = await prisma.user.findMany({
         select:{
             id:true,
@@ -51,4 +51,37 @@ const getData = async()=>{
     })
     console.log(res)
 }
-getData()
+// getUserData()
+
+//Todos::
+
+const createTodo =async(userId:number,title:string,description:string)=>{
+    const res = await prisma.todo.create({
+        data:{
+            userId,
+            title,
+            description
+        },
+        select:{
+            userId:true,
+            title:true,
+            description:true
+        }
+    })
+    console.log(res)
+}
+// createTodo(2,"Gaming","valorant at 7pm")
+
+//getTodos
+const getTodos = async(userId:number)=>{
+    const res = await prisma.todo.findMany({
+        select:{
+            id:true,
+            title:true,
+            description:true,
+            userId:true
+        }
+    })
+    console.log(res)
+}
+getTodos(1)
