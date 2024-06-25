@@ -65,7 +65,8 @@ const createTodo =async(userId:number,title:string,description:string)=>{
         select:{
             userId:true,
             title:true,
-            description:true
+            description:true,
+            done:true
         }
     })
     console.log(res)
@@ -79,9 +80,27 @@ const getTodos = async(userId:number)=>{
             id:true,
             title:true,
             description:true,
-            userId:true
+            userId:true,
+            done:true
         }
     })
     console.log(res)
 }
-getTodos(1)
+// getTodos(2)
+
+const getTodosAndUserDetails = async(userId:number)=>{
+    const todos = await prisma.todo.findMany({
+        where:{
+            userId:userId
+        },
+        select:{
+            id:true,
+            title:true,
+            description:true,
+            userId:true,
+            done:true
+        }
+    })
+    console.log(todos)
+}
+getTodosAndUserDetails(2)

@@ -66,7 +66,8 @@ const createTodo = (userId, title, description) => __awaiter(void 0, void 0, voi
         select: {
             userId: true,
             title: true,
-            description: true
+            description: true,
+            done: true
         }
     });
     console.log(res);
@@ -79,9 +80,26 @@ const getTodos = (userId) => __awaiter(void 0, void 0, void 0, function* () {
             id: true,
             title: true,
             description: true,
-            userId: true
+            userId: true,
+            done: true
         }
     });
     console.log(res);
 });
-getTodos(1);
+// getTodos(2)
+const getTodosAndUserDetails = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const todos = yield prisma.todo.findMany({
+        where: {
+            userId: userId
+        },
+        select: {
+            id: true,
+            title: true,
+            description: true,
+            userId: true,
+            done: true
+        }
+    });
+    console.log(todos);
+});
+getTodosAndUserDetails(2);
